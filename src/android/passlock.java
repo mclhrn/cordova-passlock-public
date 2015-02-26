@@ -8,37 +8,42 @@ import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-/**
- * This class launches the camera view, allows the user to take a picture, closes the camera view,
- * and returns the captured image.  When the camera view is closed, the screen displayed before
- * the camera view was shown is redisplayed.
- */
+import android.content.ContentResolver;
+import android.content.Context;
+import android.provider.Settings;
+
+import android.app.KeyguardManager;
+import android.app.Activity;
+
+
 public class passlock extends CordovaPlugin {
 
+    private Activity _activity;
     public CallbackContext callbackContext;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        // your init code here
+        _activity = cordova.getActivity();
     }
 
-  /**
-     * Executes the request and returns PluginResult.
-     *
-     * @param action            The action to execute.
-     * @param args              JSONArry of arguments for the plugin.
-     * @param callbackContext   The callback id used when calling back into JavaScript.
-     * @return                  A PluginResult object with a status and message.
-     */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
         this.callbackContext = callbackContext;
 
         if (action.equals("status")) {
 
-            String message = args.getString(0);
-            this.echo(message, callbackContext);
+            int result = -1;
+
+            KeyguardManager keyguardManager = (KeyguardManager)_activity.getSystemService(_activity.KEYGUARD_SERVICE);
+
+            if(keyguardManager.isKeyguardSecure()) {
+                result = 1;
+            } else {
+                result = 0;
+            }
+            callbackContext.success(result);
+
             return true;
 
         }

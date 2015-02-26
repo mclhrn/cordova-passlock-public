@@ -1,9 +1,8 @@
+#import <Foundation/Foundation.h>
+#import <Cordova/CDVPlugin.h>
 
-#import "UIDevice+PasscodeStatus.h"
+@interface passlock : CDVPlugin
 
-
-@interface passlock : NSObject
-
-- (int)getPasscodeState;
+- (void)status:(CDVInvokedUrlCommand*)command;
 
 @end

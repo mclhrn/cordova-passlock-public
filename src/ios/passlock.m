@@ -1,6 +1,20 @@
 #import "passlock.h"
+#import "UIDevice+PasscodeStatus.h"
 
 @implementation passlock
+
+- (void)status:(CDVInvokedUrlCommand*)command
+{
+    __weak passlock* weakSelf = self;
+    
+    [self.commandDelegate runInBackground:^{
+        
+        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No camera available"];
+        [weakSelf.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        
+    }];
+    
+}
 
 - (int)getPasscodeState
 {

@@ -11,6 +11,7 @@
             <clobbers target="passlock" />
         </js-module>
 
+        <!-- IOS -->
         <platform name="ios">
             <config-file target="config.xml" parent="/*">
                 <feature name="passlock">
@@ -23,7 +24,7 @@
             <source-file src="src/ios/UIDevice+PasscodeStatus.m" />
         </platform>
 
-        <!-- android -->
+        <!-- ANDROID -->
         <platform name="android">
 
             <config-file target="res/xml/config.xml" parent="/*">

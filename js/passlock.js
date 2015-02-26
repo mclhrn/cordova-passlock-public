@@ -4,7 +4,14 @@ var passlock = {};
 
 passlock.getStatus = function(success, error, options) {
 
-  exec( success, error, 'passlock', 'status', options );
+  options = options || [];
+
+  exec( function(result) {
+    var out = (result == 1);
+    success(out);
+  }, function(result) {
+    error(result);
+  } , 'passlock', 'status', options );
 
 }
 

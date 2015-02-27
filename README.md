@@ -31,24 +31,25 @@ is required to get passed the lock screen.
 
 paste the following into config.xml in your app's root directory
 ```xml
+
 <!-- passlock -->
 
 <feature name="passlock">
     <param name="ios-package" value="passlock" />
-    <param name="onload" value="true" />
-</feature>
-
-<feature name="passlock">
     <param name="android-package" value="com.feedhenry.passlock.passlock" />
     <param name="onload" value="true" />
 </feature>
-
+    
 ```
 
 #### iOS specific changes
 
 This plugin requires the Security.framework in order to operate. You'll need to
-add it to your project.
+add it to your XCode project. 
+
+```text
+Build Phases -> Link Binary with Libraries
+```
 
 
 #### Android specific changes

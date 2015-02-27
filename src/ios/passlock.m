@@ -9,7 +9,15 @@
     
     [self.commandDelegate runInBackground:^{
         
-        CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"No camera available"];
+        int status = [self getPasscodeState];
+        CDVPluginResult* result;
+        
+        if(status < 0) {
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Could not determine passlock status"];
+        } else {
+            result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:status];
+        }
+        
         [weakSelf.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         
     }];

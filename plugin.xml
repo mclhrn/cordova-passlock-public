@@ -22,6 +22,7 @@
             <source-file src="src/ios/passlock.m" />
             <header-file src="src/ios/UIDevice+PasscodeStatus.h" />
             <source-file src="src/ios/UIDevice+PasscodeStatus.m" />
+            <framework src="Security.framework" />
         </platform>
 
         <!-- ANDROID -->
@@ -38,10 +39,6 @@
             </config-file>
 
             <source-file src="src/android/passlock.java" target-dir="src/com/feedhenry/passlock" />
-
-            <js-module src="js/passlock.js" name="passlock">
-                <clobbers target="passlock" />
-            </js-module>
 
         </platform>
 

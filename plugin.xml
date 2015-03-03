@@ -7,10 +7,6 @@
         <license>Apache 2.0</license>
         <keywords>cordova,pass,passcode,pin,code,lock,autolock,auto</keywords>
 
-        <js-module src="js/passlock.js" name="passlock">
-            <clobbers target="passlock" />
-        </js-module>
-
         <!-- IOS -->
         <platform name="ios">
             <config-file target="config.xml" parent="/*">
@@ -23,6 +19,11 @@
             <header-file src="src/ios/UIDevice+PasscodeStatus.h" />
             <source-file src="src/ios/UIDevice+PasscodeStatus.m" />
             <framework src="Security.framework" />
+
+            <js-module src="js/passlock.js" name="passlock">
+                <clobbers target="passlock" />
+            </js-module>
+
         </platform>
 
         <!-- ANDROID -->
@@ -39,6 +40,11 @@
             </config-file>
 
             <source-file src="src/android/passlock.java" target-dir="src/com/feedhenry/passlock" />
+
+
+            <js-module src="js/passlock.js" name="passlock">
+                <clobbers target="passlock" />
+            </js-module>
 
         </platform>
 

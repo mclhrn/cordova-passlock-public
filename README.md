@@ -1,5 +1,7 @@
 ## Introduction
 
+**Compatible with Android (Api Level 16+) and iOS 8.0**
+
 plugin for Cordova to enable the detection of whether a password, pin or gesture
 is required to get passed the lock screen.
 

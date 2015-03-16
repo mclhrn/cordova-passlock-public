@@ -3,81 +3,44 @@
 plugin for Cordova to enable the detection of whether a password, pin or gesture
 is required to get passed the lock screen.
 
-#### Cordova
+This plugin exposes node-style events which you can bind to, like so:
 
 ```javascript
-<script>
+passlock.start();
+passlock.on('change', function(state) {
+    console.log('Passlock status changed to: ' + state);
+});
 
-    setInterval(function() {
-
-        passlock.getStatus(
-
-            function success(result) {
-                console.log(result);
-            },
-
-            function error(result) {
-                console.log(result);
-            }
-
-        );
-
-    }, 1500);
-
-</script> 
 ```
 
-#### Add plugin to cordova project
+#### Methods
 
-paste the following into config.xml in your app's root directory
-```xml
-
-<!-- passlock -->
-
-<feature name="passlock">
-    <param name="ios-package" value="passlock" />
-    <param name="android-package" value="com.feedhenry.passlock.passlock" />
-    <param name="onload" value="true" />
-</feature>
-    
+begin tracking changes to the passlock:
+```javascript
+passlock.start();
 ```
 
-#### iOS specific changes
-
-This plugin requires the Security.framework in order to operate. You'll need to
-add it to your XCode project. 
-
-```text
-Build Phases -> Link Binary with Libraries
+end tracking changes:
+```javascript
+passlock.stop();
 ```
 
-
-#### Android specific changes
-
-This plugin requires Android API Level 16 and above. You will need to update 
-your Cordova project to have 16 as the 'minimum' SDK version in manifest.xml:
-
-```xml
-<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="19" />
+get the status of the passlock (will return most recent value if tracking is enabled):
+```javascript
+passlock.getStatus(success, error, options);
 ```
 
+#### Events
 
-#### Android projects in Android Studio
+* enabled: triggered when the passlock is enabled
+* disabled: triggered when the passlock is disabled (or otherwise unknown)
+* change: triggered when the passlock state changes
+* tick: triggered each time the internal timer 'ticks'
 
-Importing cordova projects into android will typically fail due to gradle errors
- you can fix them by following the following steps:
+#### Global Scope
 
-###### update gradle dependencies
-
-Update the build.gradle file in your project root and the CordovaLib root paths 
-to reflect the following settings
+passlock is attached to the window global scope so that you may access it anywhere within your application.
 
 ```javascript
-dependencies {
-  classpath 'com.android.tools.build:gradle:1.1.0+'
-}
-```
-
-```javascript
-buildToolsVersion "19.1.0"
+var passlock = window.passlock;
 ```

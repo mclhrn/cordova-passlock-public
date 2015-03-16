@@ -1,53 +1,43 @@
  <?xml version="1.0" encoding="UTF-8"?>
-    <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-            id="com.feedhenry.passlock" version="0.2.3">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="com.feedhenry.passlock" version="0.2.3">
 
-        <name>passlock</name>
-        <description>Detect whether a passcode is required to get passed the lock screen</description>
-        <license>Apache 2.0</license>
-        <keywords>cordova,pass,passcode,pin,code,lock,autolock,auto</keywords>
+    <name>passlock</name>
+    <description>Detect whether a passcode is required to get passed the lock screen</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,pass,passcode,pin,code,lock,autolock,auto,keyguard</keywords>
 
-        <!-- IOS -->
-        <platform name="ios">
-            <config-file target="config.xml" parent="/*">
-                <feature name="passlock">
-                    <param name="ios-package" value="passlock"/>
-                </feature>
-            </config-file>
-            <header-file src="src/ios/passlock.h" />
-            <source-file src="src/ios/passlock.m" />
-            <header-file src="src/ios/UIDevice+PasscodeStatus.h" />
-            <source-file src="src/ios/UIDevice+PasscodeStatus.m" />
-            <framework src="Security.framework" />
+    <!-- LIB -->
+    <js-module src="www/lib/eventEmitter/EventEmitter.js" name="EventEmitter">
+        <clobbers target="EventEmitter" />
+    </js-module>
+    <js-module src="www/js/passlock.js" name="passlock">
+        <clobbers target="window.passlock" />
+    </js-module>
 
-            <js-module src="js/passlock.js" name="passlock">
-                <clobbers target="passlock" />
-            </js-module>
+    <!-- IOS -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="passlock">
+                <param name="ios-package" value="passlock"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/passlock.h" />
+        <source-file src="src/ios/passlock.m" />
+        <header-file src="src/ios/UIDevice+PasscodeStatus.h" />
+        <source-file src="src/ios/UIDevice+PasscodeStatus.m" />
+        <framework src="Security.framework" />
 
-        </platform>
+    </platform>
 
-        <!-- ANDROID -->
-        <platform name="android">
+    <!-- ANDROID -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="passlock">
+                <param name="android-package" value="com.feedhenry.passlock.passlock"/>
+            </feature>
+        </config-file>
+        <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="17" />
+        <source-file src="src/android/passlock.java" target-dir="src/com/feedhenry/passlock" />
+    </platform>
 
-            <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="17" />
-
-            <config-file target="res/xml/config.xml" parent="/*">
-                <feature name="passlock">
-                    <param name="android-package" value="com.feedhenry.passlock.passlock"/>
-                </feature>
-            </config-file>
-
-            <config-file target="AndroidManifest.xml" parent="/*">
-                <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-            </config-file>
-
-            <source-file src="src/android/passlock.java" target-dir="src/com/feedhenry/passlock" />
-
-
-            <js-module src="js/passlock.js" name="passlock">
-                <clobbers target="passlock" />
-            </js-module>
-
-        </platform>
-
-    </plugin>
+</plugin>

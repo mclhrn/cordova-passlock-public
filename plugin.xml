@@ -6,12 +6,14 @@
     <license>Apache 2.0</license>
     <keywords>cordova,pass,passcode,pin,code,lock,autolock,auto,keyguard</keywords>
 
+    <!-- DEPENDENCIES -->
+    <dependency     id="com.feedhenry.eventemitter"
+                    url="https://github.com/feedhenry-staff/cordova-eventemitter.git"
+                    commit="v0.1.0" />
+
     <!-- LIB -->
-    <js-module src="www/lib/eventEmitter/EventEmitter.js" name="EventEmitter">
-        <clobbers target="EventEmitter" />
-    </js-module>
     <js-module src="www/js/passlock.js" name="passlock">
-        <clobbers target="window.passlock" />
+        <clobbers target="passlock" />
     </js-module>
 
     <!-- IOS -->
@@ -26,7 +28,6 @@
         <header-file src="src/ios/UIDevice+PasscodeStatus.h" />
         <source-file src="src/ios/UIDevice+PasscodeStatus.m" />
         <framework src="Security.framework" />
-
     </platform>
 
     <!-- ANDROID -->

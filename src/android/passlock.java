@@ -10,6 +10,7 @@ import org.json.JSONException;
 
 import android.app.KeyguardManager;
 import android.app.Activity;
+import android.os.Build;
 
 
 public class passlock extends CordovaPlugin {
@@ -31,6 +32,19 @@ public class passlock extends CordovaPlugin {
             KeyguardManager keyguardManager = (KeyguardManager)_activity.getSystemService(_activity.KEYGUARD_SERVICE);
 
             if(keyguardManager.isKeyguardSecure()) {
+                result = 1;
+            } else {
+                result = 0;
+            }
+            callbackContext.success(result);
+
+            return true;
+
+        } else if(action.equals("isPlatformSupported")) {
+
+            int result;
+            
+            if(Build.VERSION.SDK_INT >= 16) {
                 result = 1;
             } else {
                 result = 0;

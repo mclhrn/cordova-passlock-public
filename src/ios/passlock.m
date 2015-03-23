@@ -40,4 +40,30 @@
     }
 }
 
+- (void)isPlatformSupported:(CDVInvokedUrlCommand*)command
+{
+    __weak passlock* weakSelf = self;
+
+    [self.commandDelegate runInBackground:^{
+        
+        CDVPluginResult* result;
+        int status = [self getPlatformSupport];
+        
+        result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:status];
+        
+        [weakSelf.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+        
+    }];
+}
+
+
+- (bool)getPlatformSupport
+{
+    #if TARGET_IPHONE_SIMULATOR
+        return false;
+    #else
+        return [[UIDevice currentDevice].systemVersion floatValue] >= 8.0
+    #endif
+}
+
 @end

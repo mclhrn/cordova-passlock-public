@@ -4,5 +4,6 @@
 @interface passlock : CDVPlugin
 
 - (void)status:(CDVInvokedUrlCommand*)command;
+- (void)isPlatformSupported:(CDVInvokedUrlCommand*)command;
 
 @end

@@ -62,7 +62,7 @@
     #if TARGET_IPHONE_SIMULATOR
         return false;
     #else
-        return [[UIDevice currentDevice].systemVersion floatValue] >= 8.0
+        return [[UIDevice currentDevice].systemVersion floatValue] >= 8.0;
     #endif
 }
 

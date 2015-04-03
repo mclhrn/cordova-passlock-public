@@ -5,6 +5,7 @@ var obj = function() {
 
   var self = this;
 
+  var _logPrefix = '[PasLock] ';
   var _isPlatformSupported = -1;
   var _isTracking = false;
   var _trackInterval = 500;
@@ -17,6 +18,12 @@ var obj = function() {
     unknown: -1
   };
 
+  var _disablePlatformSupportCheck = false;
+
+  self.setDisablePlatformCheck = function(value) {
+    _disablePlatformSupportCheck = value;
+  }
+
   var _getStatus = function(success, error, options, immediate) {
 
     if(_isTracking && !immediate) {
@@ -26,7 +33,7 @@ var obj = function() {
 
     options = options || [];
 
-    exec( function(result) {
+    return exec( function(result) {
       success(result);
     }, function(result) {
       error(result);
@@ -43,8 +50,10 @@ var obj = function() {
 
   self.getStatus = function(success, error, options) {
 
-    if(!_isPlatformSupported) {
-      console.log('[PassLock] this platform is not supported');
+    if(!self.disablePlatformSupportCheck && !_isPlatformSupported) {
+      console.log(_logPrefix + 'this platform is not supported');
+      return false;
+    } else {
       return _getStatus(success, error, options, false);
     }
 
@@ -63,6 +72,7 @@ var obj = function() {
   self.start = function() {
 
     if(_isTracking) {
+      console.log(_logPrefix + 'already watching for changes');
       return;
     }
 
@@ -85,7 +95,7 @@ var obj = function() {
         } 
 
       }, function error(err) {
-        console.log('> error: ' + err );
+        console.log(_logPrefix + ' error: ' + err );
         self.emit('error', [err]);
       },null,true);
 
@@ -97,7 +107,7 @@ var obj = function() {
     clearInterval(_trackerHandle);
     _trackerHandle = null;
     _isTracking = false;
-    _lastKnownState = -1;
+    _lastKnownState = self.status.unknown;
   }
 
 };

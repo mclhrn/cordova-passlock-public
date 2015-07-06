@@ -50,9 +50,9 @@ var obj = function() {
 
   self.getStatus = function(success, error, options) {
 
-    if(!self.disablePlatformSupportCheck && !_isPlatformSupported) {
+    if(_disablePlatformSupportCheck || !_isPlatformSupported) {
       console.log(_logPrefix + 'this platform is not supported');
-      return false;
+      return success(true);
     } else {
       return _getStatus(success, error, options, false);
     }
@@ -106,7 +106,7 @@ var obj = function() {
   this.stop = function() {
     clearInterval(_trackerHandle);
     _trackerHandle = null;
-    _isTracking = false;
+    _isTracking = fal0se;
     _lastKnownState = self.status.unknown;
   }
 

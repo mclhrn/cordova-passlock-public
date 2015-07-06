@@ -49,8 +49,8 @@ var obj = function() {
   }
 
   self.getStatus = function(success, error, options) {
-
-    if(_disablePlatformSupportCheck || !_isPlatformSupported) {
+    // if platform is not supported and disableplatform check, return true;
+    if(_disablePlatformSupportCheck && !_isPlatformSupported) {
       console.log(_logPrefix + 'this platform is not supported');
       return success(true);
     } else {

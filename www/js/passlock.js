@@ -50,22 +50,32 @@ var obj = function() {
 
   self.getStatus = function(success, error, options) {
     // if platform is not supported and disableplatform check, return true;
-    if(_disablePlatformSupportCheck && !_isPlatformSupported) {
-      console.log(_logPrefix + 'this platform is not supported');
-      return success(true);
-    } else {
-      return _getStatus(success, error, options, false);
-    }
+    _getIsPlatformSupported(function(isPlatformSupported){
 
+      console.log(_logPrefix + ' isPlatformSupported ' + isPlatformSupported);
+      if(!isPlatformSupported || isPlatformSupported == -1 ) {
+        if (_disablePlatformSupportCheck) {
+          console.log(_logPrefix + 'this platform is not supported but platform support check disabled');
+          return success(true);
+        } else {
+          console.log(_logPrefix + 'this platform is not supported');
+          return success(false);
+        }
+        
+      } else {
+        return _getStatus(success, error, options, false);
+      }
+
+    }, {});
   }
 
-  var _getIsPlatformSupported = function(success, error, options) {
+  var _getIsPlatformSupported = function(success, options) {
     
     exec( function(result) {
-      success( (result == 1) );
+      success(result);
     }, function(result) {
-      error(result);
-    } , 'passlock', 'isPlatformSupported', options );
+      success(result);
+    } , 'passlock', 'isPlatformSupported', {} );
 
   }
 
